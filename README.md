@@ -12,6 +12,26 @@ s3:ObjectCreated:*
 Destination:
 serverless-transcription-trigger
 
+## AWS Services Used
+
+- Amazon S3
+  - Input audio storage
+  - Transcription output storage
+
+- AWS Lambda
+  - Event-driven processing
+  - Python runtime
+
+- Amazon Transcribe
+  - Speech-to-text transcription
+
+- AWS IAM
+  - Lambda execution role
+  - Least-privilege permissions
+
+- Amazon CloudWatch
+  - Lambda execution logs
+  - Troubleshooting and monitoring
 
 Architecture:
 

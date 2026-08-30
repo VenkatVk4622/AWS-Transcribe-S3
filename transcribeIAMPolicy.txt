@@ -1,0 +1,38 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadInputAudio",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": "arn:aws:s3:::venkat-s3-transcribe/*"
+    },
+    {
+      "Sid": "AccessOutputBucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetBucketLocation",
+        "s3:ListBucket"
+      ],
+      "Resource": "arn:aws:s3:::venkat-s3-transcribe-output"
+    },
+    {
+      "Sid": "WriteTranscriptionOutput",
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject"
+      ],
+      "Resource": "arn:aws:s3:::venkat-s3-transcribe-output/*"
+    },
+    {
+      "Sid": "StartTranscription",
+      "Effect": "Allow",
+      "Action": [
+        "transcribe:StartTranscriptionJob"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

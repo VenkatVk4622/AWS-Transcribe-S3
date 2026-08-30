@@ -1,0 +1,48 @@
+import boto3
+import urllib.parse
+import uuid
+import os
+
+transcribe = boto3.client("transcribe")
+
+OUTPUT_BUCKET = os.environ["OUTPUT_BUCKET"]
+
+
+def lambda_handler(event, context):
+    """
+    Triggered by an Amazon S3 ObjectCreated event.
+
+    Reads the uploaded audio object's S3 location and starts
+    an Amazon Transcribe transcription job.
+    """
+
+    # Extract S3 bucket and object key from the event
+    bucket = event["Records"][0]["s3"]["bucket"]["name"]
+
+    key = urllib.parse.unquote_plus(
+        event["Records"][0]["s3"]["object"]["key"]
+    )
+
+    # Construct S3 URI for Amazon Transcribe
+    media_uri = f"s3://{bucket}/{key}"
+
+    # Amazon Transcribe requires a unique job name
+    job_name = f"transcription-{uuid.uuid4()}"
+
+    # Start transcription job
+    transcribe.start_transcription_job(
+        TranscriptionJobName=job_name,
+        Media={
+            "MediaFileUri": media_uri
+        },
+        OutputBucketName=OUTPUT_BUCKET,
+        IdentifyLanguage=True
+    )
+
+    print(f"Started transcription job: {job_name}")
+    print(f"Audio file: {media_uri}")
+
+    return {
+        "statusCode": 200,
+        "body": f"Started transcription job {job_name}"
+    }

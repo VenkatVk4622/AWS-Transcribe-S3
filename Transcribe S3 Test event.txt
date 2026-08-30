@@ -1,0 +1,14 @@
+{
+  "Records": [
+    {
+      "s3": {
+        "bucket": {
+          "name": "venkat-s3-transcribe"
+        },
+        "object": {
+          "key": "aws-transcribe-test.mp3"
+        }
+      }
+    }
+  ]
+}
